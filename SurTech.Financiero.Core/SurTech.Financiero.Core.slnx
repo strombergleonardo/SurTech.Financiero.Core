@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../SurTech.Financiero.Data/SurTech.Financiero.Data.csproj" />
+  <Project Path="../SurTech.Financiero.Services/SurTech.Financiero.Services.csproj" />
+  <Project Path="../SurTech.Financiero.UI/SurTech.Financiero.UI.csproj" />
+  <Project Path="SurTech.Financiero.Core.csproj" />
+</Solution>
