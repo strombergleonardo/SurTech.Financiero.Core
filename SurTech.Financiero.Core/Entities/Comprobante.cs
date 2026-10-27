@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema; // <-- Necesario para el atributo ForeignKey
 
 namespace SurTech.Financiero.Core.Entities
 {
@@ -18,21 +19,30 @@ namespace SurTech.Financiero.Core.Entities
         public string FormaPago { get; set; } = "Contado"; // "Contado", "Cuotas", "Cheque"
         public int CantidadCuotas { get; set; } = 1;
         public decimal PorcentajeInteres { get; set; } = 0.0m;
-        public string NumeroCheque { get; set; }
-        public DateTime? FechaCheque { get; set; }
+        public string NumeroCheque { get; set; } = string.Empty; // Inicializado para evitar nulos en BD
+        public DateTime? FechaCheque { get; set; } = null;
         public DateTime FechaEmision { get; set; } = DateTime.Now;
         public decimal NetoGravado { get; set; }
         public decimal ImporteIva { get; set; }
         public decimal Total { get; set; }
 
         public List<ComprobanteDetalle> Detalles { get; set; } = new List<ComprobanteDetalle>();
+
+        // Relación de navegación para las cuotas asociadas al comprobante
+        public List<CuotaComprobante> Cuotas { get; set; } = new List<CuotaComprobante>();
     }
 
     public class ComprobanteDetalle
     {
         [Key]
         public int IdComprobanteDetalle { get; set; }
+
+        [ForeignKey("Comprobante")] // <-- Esto le indica a EF que la FK es IdComprobante
         public int IdComprobante { get; set; }
+
+        // Propiedad de navegación opcional hacia el comprobante principal
+        public virtual Comprobante Comprobante { get; set; }
+
         public int IdArticulo { get; set; }
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
